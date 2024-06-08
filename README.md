@@ -25,4 +25,4 @@ Para começar a usar o aplicativo, siga os passos abaixo:
 Para executar o aplicativo localmente e verificar suas alterações, use o comando abaixo no terminal:
 
 ```sh
-streamlit run app.py
+streamlit run streamlit_app.py
