@@ -2,3 +2,4 @@ streamlit==1.26.0
 matplotlib==3.9.0
 plotly==5.22.0
 pycountry==24.6.1
+pycountry-convert==0.7.2
