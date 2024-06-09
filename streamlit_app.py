@@ -9,11 +9,11 @@ st.title('Projeto de Visualização de Dados')
 raw_df = pd.read_csv('./data/Agrofood_co2_emission.csv')
 
 
-tab1, tab2= st.tabs(["Tab1", "Tab2"])
+tab1, tab2= st.tabs(["Emissões de CO2", "Tab2"])
 with tab1:
-    st.subheader("Overview")
+    st.title("Emissões de CO2")
     draw_tab1(raw_df)
 
 with tab2:
-    st.subheader("Overview 2")
+    st.title("Overview 2")
     draw_tab2(raw_df)
