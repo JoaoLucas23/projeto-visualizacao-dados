@@ -17,7 +17,7 @@ def get_continent(country_name):
         return None
 
 # Função para desenhar o mapa de calor
-def draw_tab1(df):
+def draw_tab2(df):
     st.title("Emissões de CO2 no período por País")
     # Adicionar coluna de continente
     df['Continent'] = df['Area'].apply(get_continent)
@@ -68,19 +68,7 @@ def draw_tab1(df):
 
     fig.update_layout(
         margin={"r":100,"t":0,"l":100,"b":0},
-        autosize=True,
-        annotations=[
-        {
-            'xref': 'paper',
-            'yref': 'paper',
-            'x': 0.5,
-            'y': -0.1,
-            'xanchor': 'center',
-            'yanchor': 'top',
-            'text': 'Os países em cinza não contêm dados.',
-            'showarrow': False
-        }
-    ]
+        autosize=True
     )
 
     fig.update_layout(width=None, height=None)
