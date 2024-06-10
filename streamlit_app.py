@@ -22,5 +22,5 @@ with tab2:
     draw_tab2(raw_df)
 
 with tab3:
-    st.title("Overview 2")
+    st.title("Evolução da temperatura anual")
     draw_tab3(raw_df)
