@@ -24,7 +24,7 @@ def draw_intro():
     Projeto desenvolvido por 
     - João Lucas Lage Gonçalves
     - João Marcos Ribeiro Tolentino
-    - Kléber Junior
+    - Kleber Junior Alves Pereira
     """)
              
              
