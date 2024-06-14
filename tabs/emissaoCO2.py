@@ -43,16 +43,16 @@ def draw_tab2(df):
 
     if ano_min != ano_max:
         df = df[df['Year'].between(ano_min,ano_max)]
-        df = df.groupby(['Area', 'Continent'])['total_emission'].sum().reset_index()
+        grouped_df = df.groupby(['Area', 'Continent'])['total_emission'].sum().reset_index()
     else:
-        df = df[df['Year'] == ano_min]
+        grouped_df = df[df['Year'] == ano_min]
 
     # Determinar o escopo do mapa
     continente = 'world' if len(continente_selecionado) > 1 else continente_selecionado[0].lower()
 
     # Criar o mapa coroplético
 
-    fig = px.choropleth(df,
+    fig = px.choropleth(grouped_df,
                         locations="Area",
                         locationmode='country names',
                         color="total_emission",
@@ -62,6 +62,7 @@ def draw_tab2(df):
                         labels={'total_emission': 'Emissões Totais de CO2 (kt)'},
                         scope=continente,
                         fitbounds="locations",
+                        hover_data=['Continent', 'total_emission'],
                         # width=1000,
                         # height=800,
                     )
@@ -76,4 +77,54 @@ def draw_tab2(df):
     # Exibir o gráfico centralizado usando o argumento use_container_width=True
     st.plotly_chart(fig, use_container_width=True)
 
-    st.markdown("*Os países em cinza não contêm dados.")
+    st.markdown("**Os países em cinza não contêm dados*")
+
+    st.markdown("## Emissões de CO2 por País e Fonte de Emissão no período selecionado")
+
+    emission_sources = [
+        'Savanna fires', 'Forest fires', 'Crop Residues', 'Rice Cultivation',
+        'Drained organic soils (CO2)', 'Pesticides Manufacturing', 'Food Transport',
+        'Forestland', 'Net Forest conversion', 'Food Household Consumption',
+        'Food Retail', 'On-farm Electricity Use', 'Food Packaging',
+        'Agrifood Systems Waste Disposal', 'Food Processing',
+        'Fertilizers Manufacturing', 'IPPU', 'Manure applied to Soils',
+        'Manure left on Pasture', 'Manure Management', 'Fires in organic soils',
+        'Fires in humid tropical forests', 'On-farm energy use'
+    ]
+
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        n_pais = st.number_input("Número de Países a serem exibidos", min_value=1, max_value=10, value=5, step=1, key="num_countries")
+    with col2:
+        n_emissors = st.number_input("Número de Emissores a serem exibidos", min_value=1, max_value=10, value=5, step=1, key="num_emissors")
+
+    for column in df.columns:
+        if column in emission_sources:
+            df[column] = df[column].apply(pd.to_numeric, errors='coerce')
+    
+    total_emissions_by_country = df.groupby('Area')[emission_sources].sum().sum(axis=1)
+    top_5_countries = total_emissions_by_country.nlargest(n_pais).index.tolist()
+
+    data_filtered = df[df['Area'].isin(top_5_countries)].sort_values(by='total_emission',ascending=False)
+
+    total_emissions_by_source = data_filtered[emission_sources].sum()
+    top_n_sources = total_emissions_by_source.nlargest(n_emissors).index.tolist()
+
+    emissions_long = data_filtered.melt(id_vars=['Area','Year'], value_vars=top_n_sources, 
+                                    var_name='Emission Source', value_name='Emission Value')
+    
+    df_grouped = emissions_long.groupby(['Area','Emission Source'])['Emission Value'].sum()
+    df_grouped = df_grouped.sort_values(ascending=False)
+
+    fig = px.bar(
+          df_grouped.reset_index(),
+          x='Area',
+          y='Emission Value',
+          color='Emission Source',
+          barmode='group',
+          labels={'Emission Value': 'Emissões Totais de CO2 (kt)'},
+          title='Emissões de CO2 por País e Fonte de Emissão',
+          color_discrete_sequence=px.colors.qualitative.G10
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
