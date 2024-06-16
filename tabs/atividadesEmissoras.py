@@ -35,11 +35,13 @@ def chart1(df):
     normalized_emission['Area'] = normalized_emission.index
     normalized_emission['iso_alpha'] = normalized_emission['Area'].apply(get_iso_alpha)
 
+    normalized_emission.rename(columns={'mean_CO2_emission': 'Emissão Média de CO2'}, inplace=True)
+
     fig = px.choropleth \
     (
         normalized_emission,
         locations="iso_alpha",
-        color="mean_CO2_emission",
+        color="Emissão Média de CO2",
         hover_name="Area",
         color_continuous_scale=["#FA8072", "#FF0000"] 
     )
@@ -54,7 +56,7 @@ def chart1(df):
     fig.add_trace(fig2.data[0])
 
     fig.update_layout(
-        title={'text': "Emissões médias de CO2 x Aumento médio da temperatura por país", 'x': 0.5, 'xanchor': 'center'},
+        title={'text': "Aumento médio da temperatura por país", 'x': 0.5, 'xanchor': 'center'},
         autosize=False,
         height=600,
         width=1200
@@ -77,11 +79,13 @@ def chart2(df):
     normalized_emission['iso_alpha'] = normalized_emission['Area'].apply(get_iso_alpha)
     normalized_emission['mean_industrial_emissions'] = normalized_emission['mean_industrial_emissions'].fillna(0)
 
+    normalized_emission.rename(columns={'mean_CO2_emission': 'Emissão Média de CO2'}, inplace=True)
+
     fig = px.choropleth \
     (
         normalized_emission,
         locations="iso_alpha",
-        color="mean_CO2_emission",
+        color="Emissão Média de CO2",
         hover_name="Area",
         color_continuous_scale=["#FA8072", "#FF0000"] 
     )
@@ -96,7 +100,7 @@ def chart2(df):
     fig.add_trace(fig2.data[0])
 
     fig.update_layout(
-        title={'text': "Emissões médias de CO2 x Emissões industriais médias por país", 'x': 0.5, 'xanchor': 'center'},
+        title={'text': "Emissões industriais médias por país", 'x': 0.5, 'xanchor': 'center'},
         autosize=False,
         height=600,
         width=1200
@@ -118,10 +122,13 @@ def chart3(df):
     normalized_emission['iso_alpha'] = normalized_emission['Area'].apply(get_iso_alpha)
     normalized_emission['mean_waste_emission'] = normalized_emission['mean_waste_emission'].fillna(0)
 
-    fig = px.choropleth(
+    normalized_emission.rename(columns={'mean_CO2_emission': 'Emissão Média de CO2'}, inplace=True)
+
+    fig = px.choropleth \
+    (
         normalized_emission,
         locations="iso_alpha",
-        color="mean_CO2_emission",
+        color="Emissão Média de CO2",
         hover_name="Area",
         color_continuous_scale=["#FA8072", "#FF0000"] 
     )
@@ -137,7 +144,7 @@ def chart3(df):
 
     fig.update_layout \
     (
-        title={'text': "Emissões médias de CO2 x Emissões de eliminação de resíduos agroalimentares por país", 'x': 0.5, 'xanchor': 'center'},
+        title={'text': "Emissões de eliminação de resíduos agroalimentares por país", 'x': 0.5, 'xanchor': 'center'},
         autosize=False,
         height=600,
         width=1200
@@ -159,10 +166,13 @@ def chart4(df):
     normalized_emission['iso_alpha'] = normalized_emission['Area'].apply(get_iso_alpha)
     normalized_emission['mean_cultivation_emissions'] = normalized_emission['mean_cultivation_emissions'].fillna(0)
 
-    fig = px.choropleth(
+    normalized_emission.rename(columns={'mean_CO2_emission': 'Emissão Média de CO2'}, inplace=True)
+
+    fig = px.choropleth \
+    (
         normalized_emission,
         locations="iso_alpha",
-        color="mean_CO2_emission",
+        color="Emissão Média de CO2",
         hover_name="Area",
         color_continuous_scale=["#FA8072", "#FF0000"] 
     )
@@ -178,7 +188,7 @@ def chart4(df):
 
     fig.update_layout \
     (
-        title={'text': "Emissões médias de CO2 x Emissões médias de cultivo por país", 'x': 0.5, 'xanchor': 'center'},
+        title={'text': "Emissões médias de cultivo por país", 'x': 0.5, 'xanchor': 'center'},
         autosize=False,
         height=600,
         width=1200
@@ -200,10 +210,13 @@ def chart5(df):
     normalized_emission['iso_alpha'] = normalized_emission['Area'].apply(get_iso_alpha)
     normalized_emission['mean_fire_emissions'] = normalized_emission['mean_fire_emissions'].fillna(0)
 
-    fig = px.choropleth(
+    normalized_emission.rename(columns={'mean_CO2_emission': 'Emissão Média de CO2'}, inplace=True)
+
+    fig = px.choropleth \
+    (
         normalized_emission,
         locations="iso_alpha",
-        color="mean_CO2_emission",
+        color="Emissão Média de CO2",
         hover_name="Area",
         color_continuous_scale=["#FA8072", "#FF0000"] 
     )
@@ -219,7 +232,7 @@ def chart5(df):
 
     fig.update_layout \
     (
-        title={'text': "Emissões médias de CO2 x Emissões de incêndios por país", 'x': 0.5, 'xanchor': 'center'},
+        title={'text': "Emissões de incêndios por país", 'x': 0.5, 'xanchor': 'center'},
         autosize=False,
         height=600,
         width=1200
@@ -241,10 +254,13 @@ def chart6(df):
     normalized_emission['iso_alpha'] = normalized_emission['Area'].apply(get_iso_alpha)
     normalized_emission['mean_household_emission'] = normalized_emission['mean_household_emission'].fillna(0)
 
-    fig = px.choropleth(
+    normalized_emission.rename(columns={'mean_CO2_emission': 'Emissão Média de CO2'}, inplace=True)
+
+    fig = px.choropleth \
+    (
         normalized_emission,
         locations="iso_alpha",
-        color="mean_CO2_emission",
+        color="Emissão Média de CO2",
         hover_name="Area",
         color_continuous_scale=["#FA8072", "#FF0000"] 
     )
@@ -260,7 +276,7 @@ def chart6(df):
 
     fig.update_layout \
     (
-        title={'text': "Emissões médias de CO2 x Emissões de consumo doméstico por país", 'x': 0.5, 'xanchor': 'center'},
+        title={'text': "Emissões de consumo doméstico por país", 'x': 0.5, 'xanchor': 'center'},
         autosize=False,
         height=600,
         width=1200
